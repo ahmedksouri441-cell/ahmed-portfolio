@@ -1,276 +1,162 @@
-/* =========================================================
-   MOBILE MENU
-========================================================= */
-
-const menuBtn = document.getElementById("menu-btn");
-const navbar = document.getElementById("navbar");
-
-menuBtn.addEventListener("click", () => {
-
-    navbar.classList.toggle("active");
-
-});
-
-
-/* Close mobile menu after clicking a link */
-
-const navLinks = document.querySelectorAll(".navbar a");
-
-navLinks.forEach((link) => {
-
-    link.addEventListener("click", () => {
-
-        navbar.classList.remove("active");
-
-    });
-
-});
-
-
-/* =========================================================
-   SCROLL REVEAL
-========================================================= */
-
-const reveals = document.querySelectorAll(".reveal");
-
-function revealElements() {
-
-    reveals.forEach((element) => {
-
-        const windowHeight = window.innerHeight;
-
-        const elementTop =
-            element.getBoundingClientRect().top;
-
-        const revealPoint = 100;
-
-        if (elementTop < windowHeight - revealPoint) {
-
-            element.classList.add("active");
-
-        }
-
-    });
-
-}
-
-window.addEventListener("scroll", revealElements);
-
-window.addEventListener("load", revealElements);
-
-
-/* =========================================================
-   ACTIVE NAVIGATION
-========================================================= */
-
-const sections = document.querySelectorAll("section");
-
-function updateActiveLink() {
-
-    let current = "";
-
-    sections.forEach((section) => {
-
-        const sectionTop =
-            section.offsetTop - 180;
-
-        if (window.scrollY >= sectionTop) {
-
-            current = section.getAttribute("id");
-
-        }
-
-    });
-
-    navLinks.forEach((link) => {
-
-        link.classList.remove("active");
-
-        if (
-            link.getAttribute("href") === `#${current}`
-        ) {
-
-            link.classList.add("active");
-
-        }
-
-    });
-
-}
-
-window.addEventListener("scroll", updateActiveLink);
-
-window.addEventListener("load", updateActiveLink);
-
-
-/* =========================================================
-   PROJECT DATA
-========================================================= */
-
 const projects = {
 
     project1: {
 
-        type: "REVERSE ENGINEERING · COFICAB",
+        type: "RÉTRO-INGÉNIERIE · COFICAB",
 
-        title: "Bobbin Changing System",
+        title: "Système de changement de bobine",
 
         description: `
-            Reverse engineering of the SV402D mechanical subsystem
-            from physical components and scanned drawings.
-            The project involved dimensional measurements,
-            mechanical reconstruction and assembly modeling.
+            Rétro-ingénierie du sous-ensemble mécanique SV402D
+            à partir de pièces physiques et de plans scannés.
+            Le projet comprend les relevés dimensionnels,
+            la reconstruction mécanique et la modélisation
+            de l'assemblage.
         `,
 
         methodology: `
-            The mechanical components were measured manually and
-            reconstructed under SolidWorks. The assembly was rebuilt
-            by defining the different components and their kinematic
-            relationships while considering functional tolerances.
+            Les composants mécaniques ont été relevés manuellement
+            puis reconstruits sous SolidWorks. L'assemblage a été
+            reconstitué en définissant les différents composants,
+            leurs liaisons cinématiques et les tolérances fonctionnelles.
         `,
 
         tools: [
             "SolidWorks",
-            "CAD",
-            "Reverse Engineering",
-            "3D Modeling",
-            "Assembly"
+            "CAO",
+            "Rétro-ingénierie",
+            "Modélisation 3D",
+            "Assemblage"
         ]
-
     },
 
 
     project2: {
 
-        type: "MECHANICAL DESIGN · MULTIPHYSICS",
+        type: "CONCEPTION MÉCANIQUE · MULTIPHYSIQUE",
 
-        title: "Automated Photovoltaic Panel Cleaning System",
+        title: "Système automatisé de nettoyage photovoltaïque",
 
         description: `
-            Design of an automated mechanical system for cleaning
-            photovoltaic panel surfaces.
+            Conception d'un système automatisé destiné au nettoyage
+            des surfaces photovoltaïques.
         `,
 
         methodology: `
-            The project included functional analysis and definition
-            of the engineering requirements, followed by 3D CAD
-            modeling and evaluation of drive and displacement
-            solutions while considering mechanical and environmental
-            constraints.
+            Le projet comprend l'analyse fonctionnelle et la définition
+            du besoin, suivies de la modélisation 3D en CAO et de l'étude
+            des solutions d'entraînement et de déplacement en tenant
+            compte des contraintes mécaniques et environnementales.
         `,
 
         tools: [
-            "CAD",
-            "Mechanical Design",
-            "Functional Analysis",
-            "3D Modeling",
-            "Mechanisms"
+            "CAO",
+            "Conception mécanique",
+            "Analyse fonctionnelle",
+            "Modélisation 3D",
+            "Mécanismes"
         ]
-
     },
 
 
     project3: {
 
-        type: "CATIA V5 · MECHANICAL DESIGN",
+        type: "CATIA V5 · CONCEPTION MÉCANIQUE",
 
-        title: "Five-Vane Positive Displacement Pump",
+        title: "Pompe volumétrique à cinq palettes",
 
         description: `
-            Mechanical CAD project involving the modeling of a
-            five-vane positive displacement pump with an eccentric
-            rotor.
+            Projet de conception mécanique portant sur la modélisation
+            d'une pompe volumétrique à cinq palettes avec rotor excentré.
         `,
 
         methodology: `
-            The different mechanical components and the eccentric
-            rotor configuration were modeled using CATIA V5 to
-            represent the operating mechanism and assembly.
+            Les différents composants mécaniques ainsi que le rotor
+            excentré ont été modélisés sous CATIA V5 afin de représenter
+            le fonctionnement du mécanisme et son assemblage.
         `,
 
         tools: [
             "CATIA V5",
-            "CAD",
-            "Mechanical Design",
-            "Mechanisms"
+            "CAO",
+            "Conception mécanique",
+            "Mécanismes"
         ]
-
     },
 
 
     project4: {
 
-        type: "ABAQUS · FEA",
+        type: "ABAQUS · ÉLÉMENTS FINIS",
 
-        title: "2D V-Bending Simulation",
+        title: "Simulation du pliage en V",
 
         description: `
-            Finite element simulation of a 2D aluminium sheet
-            undergoing V-bending.
+            Simulation numérique 2D par éléments finis du pliage en V
+            d'une tôle d'aluminium.
         `,
 
         methodology: `
-            The numerical model includes contact between the sheet
-            and tooling together with plastic behavior represented
-            using a Johnson–Cook material model.
+            Le modèle numérique prend en compte le contact entre la tôle
+            et l'outillage ainsi que le comportement plastique du matériau
+            à travers le modèle de Johnson–Cook.
         `,
 
         tools: [
             "Abaqus",
-            "FEA",
+            "Éléments finis",
             "Contact",
-            "Plasticity",
+            "Plasticité",
             "Johnson–Cook"
         ]
-
     },
 
 
     project5: {
 
-        type: "ABAQUS · ELASTOPLASTICITY",
+        type: "ABAQUS · ÉLASTOPLASTICITÉ",
 
-        title: "3D Elastoplastic Tensile Test",
+        title: "Traction 3D élastoplastique",
 
         description: `
-            3D finite element simulation of tensile loading with
-            elastoplastic behavior and necking.
+            Simulation numérique 3D d'un essai de traction avec
+            comportement élastoplastique et apparition de la striction.
         `,
 
         methodology: `
-            The simulation investigates the deformation behavior
-            during tensile loading and includes thermomechanical
-            coupling to represent the interaction between mechanical
-            deformation and thermal effects.
+            La simulation étudie le comportement du matériau lors
+            de la traction et intègre un couplage thermomécanique
+            permettant de prendre en compte les interactions entre
+            déformation mécanique et effets thermiques.
         `,
 
         tools: [
             "Abaqus",
-            "3D FEA",
-            "Elastoplasticity",
-            "Necking",
-            "Thermomechanics"
+            "Éléments finis 3D",
+            "Élastoplasticité",
+            "Striction",
+            "Thermomécanique"
         ]
-
     },
 
 
     project6: {
 
-        type: "INDUSTRIAL ENGINEERING · SGBIA",
+        type: "INGÉNIERIE INDUSTRIELLE · SGBIA",
 
-        title: "Industrial Maintenance Optimization",
+        title: "Optimisation de la maintenance industrielle",
 
         description: `
-            Industrial engineering project focused on improving
-            the performance and reliability of a PET production line.
+            Projet d'ingénierie industrielle consacré à l'amélioration
+            des performances et de la fiabilité d'une ligne de production PET.
         `,
 
         methodology: `
-            The work included calculation of TRS, machine FMEA/AMDEC
-            on the SMI packer and contribution to TPM implementation.
-            Improvement actions were proposed to increase equipment
-            availability and reliability.
+            Le travail comprend le calcul du TRS, la réalisation d'une
+            AMDEC machine sur la fardeleuse SMI et une contribution à
+            la mise en place de la TPM. Des actions d'amélioration ont
+            été proposées afin d'améliorer la disponibilité et la
+            fiabilité des équipements.
         `,
 
         tools: [
@@ -278,154 +164,8 @@ const projects = {
             "AMDEC / FMEA",
             "TPM",
             "Maintenance",
-            "Reliability"
+            "Fiabilité"
         ]
-
     }
 
 };
-
-
-/* =========================================================
-   OPEN PROJECT
-========================================================= */
-
-function openProject(projectId) {
-
-    const project = projects[projectId];
-
-    if (!project) return;
-
-    const modal = document.getElementById("project-modal");
-
-    const modalContent =
-        document.getElementById("modal-content");
-
-    modalContent.innerHTML = `
-
-        <span class="modal-project-type">
-            ${project.type}
-        </span>
-
-        <h2>
-            ${project.title}
-        </h2>
-
-        <h3>
-            Project Overview
-        </h3>
-
-        <p>
-            ${project.description}
-        </p>
-
-        <h3>
-            Approach
-        </h3>
-
-        <p>
-            ${project.methodology}
-        </p>
-
-        <h3>
-            Tools & Skills
-        </h3>
-
-        <div class="modal-tags">
-
-            ${project.tools
-                .map(tool => `<span>${tool}</span>`)
-                .join("")
-            }
-
-        </div>
-
-    `;
-
-    modal.classList.add("active");
-
-    document.body.style.overflow = "hidden";
-
-}
-
-
-/* =========================================================
-   CLOSE PROJECT
-========================================================= */
-
-function closeProject() {
-
-    const modal =
-        document.getElementById("project-modal");
-
-    modal.classList.remove("active");
-
-    document.body.style.overflow = "auto";
-
-}
-
-
-/* Close when clicking outside */
-
-document
-    .getElementById("project-modal")
-    .addEventListener("click", (event) => {
-
-        if (event.target.id === "project-modal") {
-
-            closeProject();
-
-        }
-
-    });
-
-
-/* Close with ESC */
-
-document.addEventListener("keydown", (event) => {
-
-    if (event.key === "Escape") {
-
-        closeProject();
-
-    }
-
-});
-
-
-/* =========================================================
-   CONTACT FORM
-========================================================= */
-
-const contactForm =
-    document.getElementById("contact-form");
-
-contactForm.addEventListener("submit", (event) => {
-
-    event.preventDefault();
-
-    const name =
-        contactForm.querySelector("input[type='text']").value;
-
-    const email =
-        contactForm.querySelector("input[type='email']").value;
-
-    const message =
-        contactForm.querySelector("textarea").value;
-
-
-    const subject =
-        encodeURIComponent(
-            `Portfolio Contact - ${name}`
-        );
-
-    const body =
-        encodeURIComponent(
-            `Name: ${name}\nEmail: ${email}\n\n${message}`
-        );
-
-
-    window.location.href =
-        `mailto:ahmed.ksouri@etudiant-enit.utm.tn?subject=${subject}&body=${body}`;
-
-});
