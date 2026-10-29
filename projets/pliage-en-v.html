@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulation du pliage en V | Ahmed Ksouri</title>
+    <meta name="description" content="Simulation 2D par éléments finis du pliage en V d'une tôle d'acier sous Abaqus/Explicit : contact, plasticité et retour élastique.">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="pliage-en-v.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-blur blur-1"></div>
+    <div class="bg-blur blur-2"></div>
+
+    <header class="header">
+        <div class="container nav-container">
+            <a href="../index.html" class="logo">Ahmed<span>.</span></a>
+            <a href="../index.html#projets" class="pv-back"><i class="fas fa-arrow-left"></i> Retour au portfolio</a>
+        </div>
+    </header>
+
+    <main>
+    <!-- EN-TÊTE -->
+    <section class="pv-sec pv-hero">
+        <div class="container">
+            <nav class="pv-crumb reveal" aria-label="Fil d'Ariane">
+                <a href="../index.html">Portfolio</a> / <a href="../index.html#projets">Projets</a> / <span>Pliage en V</span>
+            </nav>
+            <span class="pv-type reveal">ABAQUS · ÉLÉMENTS FINIS</span>
+            <h1 class="reveal">Simulation du <span>pliage en V</span></h1>
+            <p class="pv-lead reveal">Simulation 2D par éléments finis, sous Abaqus/Explicit 2022, du pliage en V d'une tôle d'acier de 2 mm d'épaisseur : phase de pliage au poinçon, puis retour élastique après retrait de l'outil.</p>
+            <div class="pv-tags reveal">
+                <span>Abaqus/Explicit</span><span>FEA 2D</span><span>Contact</span><span>Plasticité</span><span>Springback</span>
+            </div>
+            <figure class="pv-glass pv-main-fig reveal">
+                <img src="../images/projets/pliage-en-v/fig3-step-retour.png" alt="Modèle Abaqus du pliage en V : champ de contraintes de von Mises après retour élastique" data-zoom>
+            </figure>
+            <p class="pv-meta reveal">TP Mise en Forme · ENIT, Génie Mécanique (2<sup>e</sup> AGM1) · 2025/2026 · réalisé en binôme</p>
+        </div>
+    </section>
+
+    <!-- CONTEXTE -->
+    <section class="pv-sec">
+        <div class="container">
+            <h2 class="section-title reveal">Contexte et <span>objectifs</span></h2>
+            <div class="pv-grid3">
+                <article class="pv-glass pv-card reveal"><i class="fas fa-bullseye"></i><h3>Objectif du TP</h3><p>Simuler en deux dimensions le pliage en V d'une tôle métallique par éléments finis avec le solveur Abaqus/Explicit 2022.</p></article>
+                <article class="pv-glass pv-card reveal"><i class="fas fa-eye"></i><h3>Ce qui est observé</h3><p>La déformation de la tôle, les champs de contraintes de von Mises et le retour élastique (springback) après retrait du poinçon.</p></article>
+                <article class="pv-glass pv-card reveal"><i class="fas fa-layer-group"></i><h3>Phénomènes pris en compte</h3><p>Contact avec frottement de Coulomb entre la tôle et les deux outils, plasticité à écrouissage isotrope et décharge élastique.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODÉLISATION -->
+    <section class="pv-sec">
+        <div class="container">
+            <h2 class="section-title reveal">Modélisation <span>numérique</span></h2>
+            <div class="pv-grid2">
+                <article class="pv-glass pv-card reveal"><h3>Géométrie</h3>
+                    <table class="pv-table"><tbody>
+                        <tr><th>Tôle</th><td>Déformable, 2D planar (shell), épaisseur e = 2 mm</td></tr>
+                        <tr><th>Poinçon</th><td>Rigide discret, profil demi-cercle, R = 3 mm (après correction)</td></tr>
+                        <tr><th>Matrice</th><td>Rigide discret en V, rayon interne R = 5 mm</td></tr>
+                        <tr><th>Autres cotes</th><td class="pv-na">Non précisées dans le compte rendu</td></tr>
+                    </tbody></table></article>
+                <article class="pv-glass pv-card reveal"><h3>Matériau de la tôle (acier)</h3>
+                    <table class="pv-table"><tbody>
+                        <tr><th>Densité</th><td>7850 kg/m³</td></tr>
+                        <tr><th>Élasticité</th><td>E = 210 000 MPa, ν = 0,3</td></tr>
+                        <tr><th>Plasticité</th><td>Écrouissage isotrope (courbe contrainte vraie / déformation plastique)</td></tr>
+                        <tr><th>Valeurs de la courbe</th><td class="pv-na">Non précisées dans le compte rendu</td></tr>
+                    </tbody></table></article>
+                <article class="pv-glass pv-card reveal"><h3>Contact</h3>
+                    <table class="pv-table"><tbody>
+                        <tr><th>Tangentiel</th><td>Frottement de Coulomb, μ = 0,1</td></tr>
+                        <tr><th>Normal</th><td>Hard contact (sans pénétration)</td></tr>
+                        <tr><th>Paires</th><td>Poinçon / face supérieure de la tôle ; matrice / face inférieure</td></tr>
+                    </tbody></table></article>
+                <article class="pv-glass pv-card reveal"><h3>Conditions aux limites et chargement</h3>
+                    <table class="pv-table"><tbody>
+                        <tr><th>Matrice (RP)</th><td>Encastrement total (U1 = U2 = UR3 = 0)</td></tr>
+                        <tr><th>Poinçon, pliage</th><td>Déplacement imposé vers le bas (U2 &lt; 0)</td></tr>
+                        <tr><th>Poinçon, retour</th><td>Retour à la position initiale (U2 = 0)</td></tr>
+                        <tr><th>Course, vitesse</th><td class="pv-na">Non précisées dans le compte rendu</td></tr>
+                    </tbody></table></article>
+            </div>
+            <article class="pv-glass pv-card reveal pv-wide"><h3>Maillage et calcul</h3>
+                <p>Tôle maillée en éléments CPE4R (quadrilatères plans à intégration réduite), avec un maillage raffiné dans la zone de pliage. Outils rigides en éléments R2D2, à maillage plus grossier. Deux steps Dynamic/Explicit ; sorties demandées : S, U et PE. Taille et nombre d'éléments : <span class="pv-na">non précisés dans le compte rendu</span>.</p></article>
+        </div>
+    </section>
+
+    <!-- MÉTHODOLOGIE -->
+    <section class="pv-sec">
+        <div class="container">
+            <h2 class="section-title reveal">Méthodologie de <span>simulation</span></h2>
+            <ol class="pv-timeline">
+                <li class="reveal"><b>Part</b><p>Tôle déformable, poinçon et matrice rigides avec leurs points de référence (RP).</p></li>
+                <li class="reveal"><b>Property</b><p>Acier : densité, élasticité, plasticité isotrope. Section shell homogène de 2 mm.</p></li>
+                <li class="reveal"><b>Assembly</b><p>Import des trois instances, poinçon centré au-dessus de la tôle, matrice en dessous.</p></li>
+                <li class="reveal"><b>Step</b><p>Step-pliage (descente du poinçon) puis Step-retour (remontée, springback), en Dynamic/Explicit.</p></li>
+                <li class="reveal"><b>Interaction</b><p>Frottement de Coulomb (μ = 0,1) et contact normal « hard ».</p></li>
+                <li class="reveal"><b>Load</b><p>Matrice encastrée, déplacement imposé du poinçon puis retour à U2 = 0.</p></li>
+                <li class="reveal"><b>Mesh</b><p>CPE4R pour la tôle, raffinement en zone de pliage, R2D2 pour les outils.</p></li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- DIFFICULTÉS -->
+    <section class="pv-sec">
+        <div class="container">
+            <h2 class="section-title reveal">Problèmes rencontrés et <span>corrections</span></h2>
+            <div class="pv-split">
+                <figure class="pv-glass pv-fig reveal">
+                    <img src="../images/projets/pliage-en-v/fig1-premiere-tentative.png" alt="Première tentative : tôle mal déformée et calcul interrompu par Abaqus/Explicit" data-zoom>
+                    <figcaption><b>Première tentative.</b> La tôle ne suit pas le profil de la matrice et le job est interrompu avec une erreur.</figcaption>
+                </figure>
+                <div>
+                    <article class="pv-glass pv-card reveal"><h3>1. Poinçon en demi-cercle</h3><p>Avec R = 5 mm, le poinçon agissait comme un effort quasi ponctuel : la tôle s'est déformée localement sans épouser la forme de la matrice.</p></article>
+                    <article class="pv-glass pv-card reveal"><h3>2. Rayons poinçon et matrice identiques</h3><p>Le rayon du poinçon (5 mm) égalait celui de la matrice sans tenir compte de l'épaisseur de la tôle, ce qui empêchait un engagement correct.</p></article>
+                    <article class="pv-glass pv-card pv-fix reveal"><h3>Correction</h3><p class="pv-formula">R<sub>poinçon</sub> = R<sub>matrice</sub> − e = 5 − 2 = 3 mm</p><p>Ce rayon correspond au rayon intérieur de courbure de la tôle pliée. La simulation corrigée donne des résultats physiquement cohérents.</p></article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RÉSULTATS -->
+    <section class="pv-sec">
+        <div class="container">
+            <h2 class="section-title reveal">Résultats de la <span>simulation</span></h2>
+            <p class="section-subtitle reveal">Cliquer sur une image pour l'agrandir. Grandeur tracée : contrainte de von Mises (S, Mises), moyenne 75 %.</p>
+            <div class="pv-grid2">
+                <figure class="pv-glass pv-fig reveal">
+                    <img src="../images/projets/pliage-en-v/fig2-step-pliage.png" alt="Step-pliage : champ de contraintes de von Mises, maximum d'environ 608 MPa" data-zoom>
+                    <figcaption><b>Step-pliage.</b> Contrainte de von Mises maximale d'environ 608 MPa dans les zones de courbure (incrément 122010, Step Time = 10,45). Les zones rouge et orange correspondent à la partie intérieure du rayon de pliage ; les extrémités de la tôle restent moins sollicitées (bleu).</figcaption>
+                </figure>
+                <figure class="pv-glass pv-fig reveal">
+                    <img src="../images/projets/pliage-en-v/fig3-step-retour.png" alt="Step-retour : retour élastique après retrait du poinçon" data-zoom>
+                    <figcaption><b>Step-retour.</b> Après retrait du poinçon, les contraintes résiduelles chutent nettement (zone dominée par le bleu, σ &lt; 300 MPa) et la tôle ne conserve pas exactement l'angle imposé (incrément 2300, Step Time = 0,2).</figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <!-- ANALYSE -->
+    <section class="pv-sec">
+        <div class="container">
+            <h2 class="section-title reveal">Analyse et <span>discussion</span></h2>
+            <div class="pv-grid3">
+                <article class="pv-glass pv-card reveal"><h3>Observations</h3><p>Contraintes maximales dans la courbure, extrémités peu sollicitées, chute des contraintes à la décharge et angle final différent de l'angle imposé.</p></article>
+                <article class="pv-glass pv-card reveal"><h3>Interprétation</h3><p>La baisse des contraintes et l'écart d'angle après retrait du poinçon sont la signature du retour élastique : la part élastique de la déformation se relâche à la décharge. La correction du rayon montre aussi l'importance de la compatibilité géométrique entre outils et tôle.</p></article>
+                <article class="pv-glass pv-card reveal"><h3>Limites du compte rendu</h3><p>Aucune valeur chiffrée du springback, ni champ de déformation plastique, ni courbe d'effort. Aucune comparaison avec une solution théorique ou expérimentale : le modèle n'est pas présenté comme validé.</p></article>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONCLUSION -->
+    <section class="pv-sec">
+        <div class="container">
+            <h2 class="section-title reveal">Conclusion et <span>compétences</span></h2>
+            <article class="pv-glass pv-card pv-wide reveal">
+                <p>Le TP a permis de simuler en 2D le pliage d'une tôle d'acier sous Abaqus/Explicit. Les erreurs initiales, liées à la forme du poinçon et à l'égalité des rayons, ont mis en évidence la compatibilité géométrique nécessaire entre les outils et la pièce. Avec un poinçon de R = 3 mm, la simulation montre la déformation plastique au pliage puis le retour élastique au déchargement.</p>
+                <div class="pv-tags">
+                    <span>Abaqus/CAE</span><span>Éléments finis explicites</span><span>Modélisation 2D</span><span>Contact et frottement</span><span>Plasticité</span><span>Analyse du springback</span><span>Diagnostic d'un modèle en échec</span>
+                </div>
+            </article>
+            <div class="pv-actions reveal">
+                <a class="pv-btn" href="../index.html#projets"><i class="fas fa-arrow-left"></i> Retour aux projets</a>
+                <a class="pv-btn pv-btn-ghost" href="../index.html">Accueil du portfolio</a>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <div class="pv-lightbox" id="pv-lightbox" role="dialog" aria-modal="true" aria-label="Visionneuse d'images" hidden>
+        <button class="pv-lb-btn pv-lb-close" aria-label="Fermer"><i class="fas fa-xmark"></i></button>
+        <button class="pv-lb-btn pv-lb-prev" aria-label="Image précédente"><i class="fas fa-chevron-left"></i></button>
+        <img src="" alt="">
+        <button class="pv-lb-btn pv-lb-next" aria-label="Image suivante"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <script src="pliage-en-v.js"></script>
+</body>
+</html>
